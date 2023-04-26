@@ -1,29 +1,5 @@
-Function Set-SoundVolume 
-{
-    Param(
-        [Parameter(Mandatory=$true)]
-        [ValidateRange(0,100)]
-        [Int]
-        $volume
-    )
-
-    # Calculate number of key presses. 
-    $keyPresses = [Math]::Ceiling( $volume / 2 )
-    
-    # Create the Windows Shell object. 
-    $obj = New-Object -ComObject WScript.Shell
-    
-    # Set volume to zero. 
-    1..50 | ForEach-Object {  $obj.SendKeys( [char] 174 )  }
-    
-    # Set volume to specified level. 
-    for( $i = 0; $i -lt $keyPresses; $i++ )
-    {
-        $obj.SendKeys( [char] 175 )
-    }
-}
-New-Alias -Name "ssv" Set-SoundVolume
-
-# Example usage
-Set-SoundVolume 100
+## Single Line declaration 
+function set_AudioLevel($audioLevel){$wshShell = new-object -com wscript.shell; 1..50 | % {$wshShell.SendKeys([char]174)}; $audioLevel = $audioLevel / 2;1..$audioLevel | % {$wshShell.SendKeys([char]175)}}
+## Sets volume to 100%
+set_AudioLevel -Volume 100
 start my_little_pony.wav
